@@ -96,16 +96,82 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+
+        # this problem sounds like the selection sort
+        # algorithm we covered in class
+
+        # for i in range(0, len(self._list) - 1):
+        #     cur_index = i
+        #     smallest_index = cur_index
+
+        #     for j in range(cur_index + 1, len(self._list)):
+        #         if self._list[j] < self._list[smallest_index]:
+        #             smallest_index = j
+
+        #     temp = self._list[cur_index]
+        #     self._list[cur_index] = self._list[smallest_index]
+        #     self._list[smallest_index] = temp
+
+        # return self._list          
+        # _______________________________________________________ 
+
+        # the code above passes the tests, but it doesn't use any
+        # of the robot's built-in abilities...
+
+        # solving again using a different algorithm that can utilize
+        # robot's built in abilities  
+
+        while self.light_is_on() == False:
+            # turn the light on
+            # it will be turned off again if there are any swaps
+            self.set_light_on()
+            
+            while self.can_move_right():
+                # grab item right in front of it
+                self.swap_item() 
+                # move               
+                self.move_right()  
+                 
+                # compare items
+                if self.compare_item() == 1:
+                    # swap
+                    self.swap_item()
+                    self.move_left()
+                    self.swap_item()
+                    # turn the light off to continue the loop
+                    self.set_light_off()
+                    self.move_right()
+                elif self.compare_item() != 1 and self.compare_item() != None:
+                    # move left by one step and repeat
+                    self.move_left()
+
+            # at this point, the robot cannot move right
+            # any farther but the light is still off, meaning
+            # the list is not completely sorted yet
+            
+            # move all the way left and start over
+            while self.can_move_left():
+                self.move_left()    
+            
+
+        return self._list
+
+        # self.swap_item()
+
+        # while self.can_move_right():
+        #     self.move_right()
+        #     if self.compare_item() == 1:
+        #         self.swap_item()
 
 
+
+       
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
-
+    # l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    l = [5, 4, 3, 2, 1]
     robot = SortingRobot(l)
 
     robot.sort()
